@@ -17,7 +17,7 @@
             font-family: 'Noto Sans JP', sans-serif;
         }
 
-        /* 🌸 배경: 부드러운 오프화이트 칼라 & 애니메이션 영역 */
+        /* 🌸 배경: 오프화이트 칼라 & 벚꽃 애니메이션 영역 */
         body {
             background-color: #fcfbf9; /* 오프화이트 (Off-White) */
             color: #2c2224;
@@ -31,7 +31,7 @@
             overflow-x: hidden;
         }
 
-        /* 🌸 떨어지는 벚꽃잎 애니메이션 컨테이너 */
+        /* 🌸 떨어지는 벚꽃잎 애니메이션 */
         .sakura-container {
             position: fixed;
             top: 0;
@@ -52,24 +52,14 @@
         }
 
         @keyframes fall {
-            0% {
-                top: -10%;
-            }
-            100% {
-                top: 110%;
-            }
+            0% { top: -10%; }
+            100% { top: 110%; }
         }
 
         @keyframes sway {
-            0% {
-                transform: translateX(0) rotate(0deg);
-            }
-            50% {
-                transform: translateX(50px) rotate(180deg);
-            }
-            100% {
-                transform: translateX(0) rotate(360deg);
-            }
+            0% { transform: translateX(0) rotate(0deg); }
+            50% { transform: translateX(50px) rotate(180deg); }
+            100% { transform: translateX(0) rotate(360deg); }
         }
 
         /* 전체 컨테이너 */
@@ -78,7 +68,7 @@
             width: 100%;
             max-width: 1100px;
             position: relative;
-            z-index: 1; /* 벚꽃잎 위에 표시되도록 수치 조정 */
+            z-index: 1;
         }
 
         /* 1. 첫 페이지 (GAME START 버튼만 위치) */
@@ -94,7 +84,7 @@
             align-items: center;
         }
         
-        /* 버튼 크기 및 벚꽃 테마 스타일 */
+        /* 버튼 디자인 */
         .btn-start {
             display: inline-block;
             padding: 22px 72px;
@@ -153,7 +143,7 @@
             border-color: #ff85a2;
         }
 
-        /* 이미지 대용 박스 */
+        /* 이미지 박스 */
         .img-placeholder {
             width: 100%;
             height: 360px;
@@ -188,6 +178,21 @@
             box-shadow: 0 15px 35px rgba(224, 109, 136, 0.08);
             border: 2px solid #ffd4de;
         }
+
+        /* 🌸 결과 멘트 박스 스타일 */
+        .desc-box {
+            background-color: #fff4f6;
+            border-radius: 16px;
+            padding: 24px 30px;
+            max-width: 600px;
+            margin: 20px auto 30px auto;
+            border: 1px solid #ffdae2;
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #4a2830;
+            line-height: 1.7;
+            box-shadow: 0 4px 15px rgba(224, 109, 136, 0.05);
+        }
         
         @media (max-width: 768px) {
             .match-container {
@@ -208,12 +213,16 @@
                 padding: 18px 50px;
                 font-size: 1.25rem;
             }
+            .desc-box {
+                font-size: 1rem5;
+                padding: 18px 20px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- 🌸 벚꽃잎 요소들이 떨어지는 배경 -->
+    <!-- 🌸 벚꽃잎 배경 -->
     <div class="sakura-container" id="sakura-container"></div>
 
     <div class="container">
@@ -244,31 +253,97 @@
             <h1 style="margin-bottom: 24px; font-size: 2.5rem; color: #e05275;">🏆 CHAMPION 🏆</h1>
             <div style="margin: 30px 0;">
                 <div id="winner-img" class="img-placeholder" style="height: 380px; max-width: 520px; margin: 0 auto 24px auto;"></div>
-                <div id="winner-name" class="japanese-name" style="font-size: 2.6rem;"></div>
+                <div id="winner-name" class="japanese-name" style="font-size: 2.6rem; margin-bottom: 15px;"></div>
+                <!-- 일본어 결과 멘트 출력 박스 -->
+                <div id="winner-desc" class="desc-box"></div>
             </div>
             <button class="btn-start" onclick="location.reload()" style="margin-top: 10px;">RESTART</button>
         </div>
     </div>
 
     <script>
-        // 16가지 음식 데이터 목록
+        // 16가지 음식 데이터 및 일본어 결과 멘트
         const foods = [
-            { img: "samgyeopsal.jpg", jp: "サムギョプサル" },
-            { img: "chicken.jpg", jp: "チキン" },
-            { img: "tteokbokki.jpg", jp: "トッポッキ" },
-            { img: "kimchi_jjigae.jpg", jp: "キムチチゲ" },
-            { img: "bibimbap.jpg", jp: "ビビンバ" },
-            { img: "bulgogi.jpg", jp: "プルコギ" },
-            { img: "cheese_dakgalbi.jpg", jp: "チーズタッカルビ" },
-            { img: "gimbap.jpg", jp: "キンパ" },
-            { img: "ramyeon.jpg", jp: "ラーメン" },
-            { img: "naengmyeon.jpg", jp: "冷麺" },
-            { img: "jajangmyeon.jpg", jp: "ジャージャー麺" },
-            { img: "sundubu_jjigae.jpg", jp: "スンドゥブチゲ" },
-            { img: "dakgalbi.jpg", jp: "タッカルビ" },
-            { img: "japchae.jpg", jp: "チャプチェ" },
-            { img: "budae_jjigae.jpg", jp: "プデチゲ" },
-            { img: "kimchi.jpg", jp: "キムチ" }
+            { 
+                img: "samgyeopsal.jpg", 
+                jp: "サムギョプサル",
+                desc: "気分が落ち込んだ時は迷わず肉に直行する、素直な直進派！" 
+            },
+            { 
+                img: "chicken.jpg", 
+                jp: "チキン",
+                desc: "夜10時になると本能が目を覚ます、夜食の名誉大使。" 
+            },
+            { 
+                img: "tteokbokki.jpg", 
+                jp: "トッポッキ",
+                desc: "ストレスが溜まると辛い味で脳をリセットする、刺激ラバー！" 
+            },
+            { 
+                img: "kimchi_jjigae.jpg", 
+                jp: "キムチチゲ",
+                desc: "華やかな流行より、いつもそばにいる安心感を愛する心地よい人。" 
+            },
+            { 
+                img: "bibimbap.jpg", 
+                jp: "ビビンバ",
+                desc: "全く違うタイプの人々もまとめて仲良くさせる、人間接着剤！" 
+            },
+            { 
+                img: "bulgogi.jpg", 
+                jp: "プルコギ",
+                desc: "好き嫌いなんて関係ない！老若男女誰からも愛される万能人気者。" 
+            },
+            { 
+                img: "cheese_dakgalbi.jpg", 
+                jp: "チーズタッカルビ",
+                desc: "定番のクラシックにトレンドをひとさじ加えられる、流行の先駆者。" 
+            },
+            { 
+                img: "gimbap.jpg", 
+                jp: "キンパ",
+                desc: "どんな場所でも100%の実力を発揮する、コスパ最強の完璧主義者。" 
+            },
+            { 
+                img: "ramyeon.jpg", 
+                jp: "ラーメン",
+                desc: "複雑な悩みはNO！3分で幸せになれる方法を知っている明快な人。" 
+            },
+            { 
+                img: "naengmyeon.jpg", 
+                jp: "冷麺",
+                desc: "周りに何を言われても気にしない！クールで自分らしい道を行くマイペース。" 
+            },
+            { 
+                img: "jajangmyeon.jpg", 
+                jp: "ジャージャー麺",
+                desc: "引越しの日や嬉しい日に、一番最初に思い浮かぶ思い出コレクター。" 
+            },
+            { 
+                img: "sundubu_jjigae.jpg", 
+                jp: "スンドゥブチゲ",
+                desc: "見た目は柔らかいけれど、心の中はマグマのように熱い情熱派！" 
+            },
+            { 
+                img: "dakgalbi.jpg", 
+                jp: "タッカルビ",
+                desc: "集まりにあなたがいないと盛り上がらない、絶対的なムードメーカー。" 
+            },
+            { 
+                img: "japchae.jpg", 
+                jp: "チャプチェ",
+                desc: "複数のことを同時に完璧にこなす、マルチタスクの達人。" 
+            },
+            { 
+                img: "budae_jjigae.jpg", 
+                jp: "プデチゲ",
+                desc: "色々な要素が混ざり合っても最高の we 導き出す、融合型の天才！" 
+            },
+            { 
+                img: "kimchi.jpg", 
+                jp: "キムチ",
+                desc: "韓国人のソウルを宿し、どこでも 강烈な存在感を放つ主人公。" 
+            }
         ];
 
         let currentCandidates = [];
@@ -278,18 +353,17 @@
         // 🌸 벚꽃잎 동적 생성 함수
         function createSakuraPetals() {
             const container = document.getElementById('sakura-container');
-            const petalCount = 25; // 꽃잎 개수
+            const petalCount = 25;
 
             for (let i = 0; i < petalCount; i++) {
                 const petal = document.createElement('div');
                 petal.classList.add('petal');
                 
-                // 크기, 위치, 떨어진속도 무작위 설정
-                const size = Math.random() * 12 + 10; // 10px ~ 22px
-                const left = Math.random() * 100; // 0% ~ 100%
-                const fallDuration = Math.random() * 6 + 6; // 6s ~ 12s
-                const swayDuration = Math.random() * 3 + 2; // 2s ~ 5s
-                const delay = Math.random() * 8; // 0s ~ 8s
+                const size = Math.random() * 12 + 10;
+                const left = Math.random() * 100;
+                const fallDuration = Math.random() * 6 + 6;
+                const swayDuration = Math.random() * 3 + 2;
+                const delay = Math.random() * 8;
 
                 petal.style.width = `${size}px`;
                 petal.style.height = `${size * 1.4}px`;
@@ -301,7 +375,6 @@
             }
         }
 
-        // 페이지 로드 시 벚꽃잎 생성
         window.onload = createSakuraPetals;
 
         // 배열 무작위 섞기
@@ -372,6 +445,7 @@
 
             document.getElementById('winner-img').innerText = winner.img;
             document.getElementById('winner-name').innerText = winner.jp;
+            document.getElementById('winner-desc').innerText = winner.desc;
         }
     </script>
 </body>
