@@ -124,26 +124,21 @@
 <body>
 
     <div class="container">
-        <!-- 1. 라운드 선택 화면 -->
         <div id="setup-screen" class="select-box">
             <h1>🇰🇷 한국 음식 이상형 월드컵 🥘</h1>
             <p>시작할 라운드를 선택해 주세요!</p>
             <div class="btn-group">
                 <button class="btn" onclick="startGame(16)">16강 시작</button>
-                <button class="btn" onclick="startGame(32)">32강 시작</button>
             </div>
         </div>
 
-        <!-- 2. 게임 진행 화면 -->
         <div id="game-screen" class="game-box">
             <h2 id="round-info" class="round-title">16강</h2>
             <div class="match-container">
-                <!-- 왼쪽 선택지 -->
                 <div class="card" onclick="selectCandidate(0)">
                     <div id="img-0" class="img-placeholder">이미지 파일명</div>
                     <div id="name-0" class="japanese-name">일본어 이름</div>
                 </div>
-                <!-- 오른쪽 선택지 -->
                 <div class="card" onclick="selectCandidate(1)">
                     <div id="img-1" class="img-placeholder">이미지 파일명</div>
                     <div id="name-1" class="japanese-name">일본어 이름</div>
@@ -151,7 +146,6 @@
             </div>
         </div>
 
-        <!-- 3. 최종 결과 화면 -->
         <div id="result-screen" class="result-box">
             <h1>🏆 최종 우승 🏆</h1>
             <div style="margin: 20px 0;">
@@ -163,7 +157,7 @@
     </div>
 
     <script>
-        // 요청해주신 32가지 음식 데이터 목록
+        // 요청해주신 16가지 음식 데이터 목록
         const foods = [
             { img: "samgyeopsal.jpg", jp: "サムギョプサル" },
             { img: "chicken.jpg", jp: "チキン" },
@@ -173,30 +167,14 @@
             { img: "bulgogi.jpg", jp: "プルコギ" },
             { img: "cheese_dakgalbi.jpg", jp: "チーズタッカルビ" },
             { img: "gimbap.jpg", jp: "キンパ" },
-            { img: "ramyeon.jpg", jp: "ラーメン (ラミョン)" },
-            { img: "naengmyeon.jpg", jp: "冷麺 (冷麺/ネンミョン)" },
-            { img: "jajangmyeon.jpg", jp: "ジャージャー麺 (チャジャンミョン)" },
+            { img: "ramyeon.jpg", jp: "ラーメン" },
+            { img: "naengmyeon.jpg", jp: "冷麺" },
+            { img: "jajangmyeon.jpg", jp: "ジャージャー麺" },
             { img: "sundubu_jjigae.jpg", jp: "スンドゥブチゲ" },
             { img: "dakgalbi.jpg", jp: "タッカルビ" },
             { img: "japchae.jpg", jp: "チャプチェ" },
-            { img: "budae_jjigae.jpg", jp: "부대찌개 (プデチゲ)" },
-            { img: "kimchi.jpg", jp: "キムチ" },
-            { img: "gamjatang.jpg", jp: "カムジャタン" },
-            { img: "jokbal.jpg", jp: "チョッパル" },
-            { img: "bossam.jpg", jp: "ポッサム" },
-            { img: "gopchang.jpg", jp: "コプチャン" },
-            { img: "dwaeji_galbi.jpg", jp: "デジカルビ" },
-            { img: "galbi.jpg", jp: "カルビ" },
-            { img: "pajeon.jpg", jp: "パジョン (チヂミ)" },
-            { img: "kimchijeon.jpg", jp: "キムチチヂミ" },
-            { img: "hotteok.jpg", jp: "ホットク" },
-            { img: "bungeoppang.jpg", jp: "フナパン (プンオパン)" },
-            { img: "korean_bingsu.jpg", jp: "韓国風かき氷 (パッピンス)" },
-            { img: "yakgwa.jpg", jp: "약과 (약과/ヤックァ)" },
-            { img: "hotdog.jpg", jp: "ハットグ" },
-            { img: "eomuk.jpg", jp: "オムク (韓国おでん)" },
-            { img: "samgyetang.jpg", jp: "サムゲタン" },
-            { img: "tteokgalbi.jpg", jp: "トッカルビ" }
+            { img: "budae_jjigae.jpg", jp: "プデチゲ" },
+            { img: "kimchi.jpg", jp: "キムチ" }
         ];
 
         let currentCandidates = [];
@@ -204,7 +182,7 @@
         let currentMatchIndex = 0;
         let totalRounds = 0;
 
-        // 배열 섞기
+        // 배열 무작위 섞기
         function shuffle(array) {
             return array.sort(() => Math.random() - 0.5);
         }
