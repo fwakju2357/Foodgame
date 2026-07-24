@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>한국 음식 이상형 월드컵</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Pretendard', sans-serif;
+        }
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            text-align: center;
+            width: 100%;
+            max-width: 900px;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        /* 라운드 선택 화면 */
+        .select-box {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .btn-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background-color: #ff6b6b;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn:hover {
+            background-color: #ee5253;
+        }
+        /* 게임 화면 */
+        .game-box {
+            display: none;
+        }
+        .round-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #ff6b6b;
+        }
+        .match-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+        .card {
+            flex: 1;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .card:hover {
+            transform: scale(1.03);
+        }
+        .img-placeholder {
+            width: 100%;
+            height: 250px;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-weight: bold;
+            color: #495057;
+            margin-bottom: 15px;
+            word-break: break-all;
+            padding: 10px;
+        }
+        .japanese-name {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #212529;
+            line-height: 1.4;
+        }
+        /* 결과 화면 */
+        .result-box {
+            display: none;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        @media (max-width: 600px) {
+            .match-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- 1. 라운드 선택 화면 -->
+        <div id="setup-screen" class="select-box">
+            <h1>🇰🇷 한국 음식 이상형 월드컵 🥘</h1>
+            <p>시작할 라운드를 선택해 주세요!</p>
+            <div class="btn-group">
+                <button class="btn" onclick="startGame(16)">16강 시작</button>
+                <button class="btn" onclick="startGame(32)">32강 시작</button>
+            </div>
+        </div>
+
+        <!-- 2. 게임 진행 화면 -->
+        <div id="game-screen" class="game-box">
+            <h2 id="round-info" class="round-title">16강</h2>
+            <div class="match-container">
+                <!-- 왼쪽 선택지 -->
+                <div class="card" onclick="selectCandidate(0)">
+                    <div id="img-0" class="img-placeholder">이미지 파일명</div>
+                    <div id="name-0" class="japanese-name">일본어 이름</div>
+                </div>
+                <!-- 오른쪽 선택지 -->
+                <div class="card" onclick="selectCandidate(1)">
+                    <div id="img-1" class="img-placeholder">이미지 파일명</div>
+                    <div id="name-1" class="japanese-name">일본어 이름</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. 최종 결과 화면 -->
+        <div id="result-screen" class="result-box">
+            <h1>🏆 최종 우승 🏆</h1>
+            <div style="margin: 20px 0;">
+                <div id="winner-img" class="img-placeholder" style="height: 300px;"></div>
+                <div id="winner-name" class="japanese-name" style="font-size: 2rem; margin-top: 15px;"></div>
+            </div>
+            <button class="btn" onclick="location.reload()">다시 하기</button>
+        </div>
+    </div>
+
+    <script>
+        // 요청해주신 32가지 음식 데이터 목록
+        const foods = [
+            { img: "samgyeopsal.jpg", jp: "サムギョプサル" },
+            { img: "chicken.jpg", jp: "チキン" },
+            { img: "tteokbokki.jpg", jp: "トッポッキ" },
+            { img: "kimchi_jjigae.jpg", jp: "キムチチゲ" },
+            { img: "bibimbap.jpg", jp: "ビビンバ" },
+            { img: "bulgogi.jpg", jp: "プルコギ" },
+            { img: "cheese_dakgalbi.jpg", jp: "チーズタッカルビ" },
+            { img: "gimbap.jpg", jp: "キンパ" },
+            { img: "ramyeon.jpg", jp: "ラーメン (ラミョン)" },
+            { img: "naengmyeon.jpg", jp: "冷麺 (冷麺/ネンミョン)" },
+            { img: "jajangmyeon.jpg", jp: "ジャージャー麺 (チャジャンミョン)" },
+            { img: "sundubu_jjigae.jpg", jp: "スンドゥブチゲ" },
+            { img: "dakgalbi.jpg", jp: "タッカルビ" },
+            { img: "japchae.jpg", jp: "チャプチェ" },
+            { img: "budae_jjigae.jpg", jp: "부대찌개 (プデチゲ)" },
+            { img: "kimchi.jpg", jp: "キムチ" },
+            { img: "gamjatang.jpg", jp: "カムジャタン" },
+            { img: "jokbal.jpg", jp: "チョッパル" },
+            { img: "bossam.jpg", jp: "ポッサム" },
+            { img: "gopchang.jpg", jp: "コプチャン" },
+            { img: "dwaeji_galbi.jpg", jp: "デジカルビ" },
+            { img: "galbi.jpg", jp: "カルビ" },
+            { img: "pajeon.jpg", jp: "パジョン (チヂミ)" },
+            { img: "kimchijeon.jpg", jp: "キムチチヂミ" },
+            { img: "hotteok.jpg", jp: "ホットク" },
+            { img: "bungeoppang.jpg", jp: "フナパン (プンオパン)" },
+            { img: "korean_bingsu.jpg", jp: "韓国風かき氷 (パッピンス)" },
+            { img: "yakgwa.jpg", jp: "약과 (약과/ヤックァ)" },
+            { img: "hotdog.jpg", jp: "ハットグ" },
+            { img: "eomuk.jpg", jp: "オムク (韓国おでん)" },
+            { img: "samgyetang.jpg", jp: "サムゲタン" },
+            { img: "tteokgalbi.jpg", jp: "トッカルビ" }
+        ];
+
+        let currentCandidates = [];
+        let nextRoundCandidates = [];
+        let currentMatchIndex = 0;
+        let totalRounds = 0;
+
+        // 배열 섞기
+        function shuffle(array) {
+            return array.sort(() => Math.random() - 0.5);
+        }
+
+        // 게임 시작
+        function startGame(roundCount) {
+            totalRounds = roundCount;
+            currentCandidates = shuffle([...foods]).slice(0, roundCount);
+            nextRoundCandidates = [];
+            currentMatchIndex = 0;
+
+            document.getElementById('setup-screen').style.display = 'none';
+            document.getElementById('game-screen').style.display = 'block';
+
+            updateMatch();
+        }
+
+        // 대진 화면 업데이트
+        function updateMatch() {
+            const totalMatches = currentCandidates.length / 2;
+            const matchNum = (currentMatchIndex / 2) + 1;
+            
+            let roundText = "";
+            if (currentCandidates.length === 2) {
+                roundText = "결승전";
+            } else {
+                roundText = `${currentCandidates.length}강 (${matchNum}/${totalMatches})`;
+            }
+            
+            document.getElementById('round-info').innerText = roundText;
+
+            const c1 = currentCandidates[currentMatchIndex];
+            const c2 = currentCandidates[currentMatchIndex + 1];
+
+            document.getElementById('img-0').innerText = c1.img;
+            document.getElementById('name-0').innerText = c1.jp;
+
+            document.getElementById('img-1').innerText = c2.img;
+            document.getElementById('name-1').innerText = c2.jp;
+        }
+
+        // 선택 처리
+        function selectCandidate(index) {
+            const selected = currentCandidates[currentMatchIndex + index];
+            nextRoundCandidates.push(selected);
+            currentMatchIndex += 2;
+
+            if (currentMatchIndex >= currentCandidates.length) {
+                if (nextRoundCandidates.length === 1) {
+                    showResult(nextRoundCandidates[0]);
+                } else {
+                    currentCandidates = nextRoundCandidates;
+                    nextRoundCandidates = [];
+                    currentMatchIndex = 0;
+                    updateMatch();
+                }
+            } else {
+                updateMatch();
+            }
+        }
+
+        // 결과 화면 표시
+        function showResult(winner) {
+            document.getElementById('game-screen').style.display = 'none';
+            document.getElementById('result-screen').style.display = 'block';
+
+            document.getElementById('winner-img').innerText = winner.img;
+            document.getElementById('winner-name').innerText = winner.jp;
+        }
+    </script>
+</body>
+</html>
