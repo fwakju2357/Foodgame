@@ -143,22 +143,14 @@
             border-color: #ff85a2;
         }
 
-        /* 이미지 박스 */
-        .img-placeholder {
+        /* 🖼️ 진짜 이미지 스타일 설정 */
+        .food-img {
             width: 100%;
             height: 360px;
-            background-color: #fff0f3;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            object-fit: cover; /* 이미지가 상자 크기에 맞춰 예쁘게 잘림 */
             border-radius: 18px;
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #c9526f;
             margin-bottom: 24px;
-            word-break: break-all;
-            padding: 20px;
-            border: 2px dashed #ffb8c8;
+            border: 2px solid #ffdae2;
         }
 
         /* 일본어 이름 */
@@ -203,9 +195,8 @@
             .card {
                 padding: 20px;
             }
-            .img-placeholder {
+            .food-img {
                 height: 240px;
-                font-size: 1rem;
             }
             .japanese-name {
                 font-size: 1.6rem;
@@ -238,12 +229,12 @@
             <div class="match-container">
                 <!-- 왼쪽 선택지 -->
                 <div class="card" onclick="selectCandidate(0)">
-                    <div id="img-0" class="img-placeholder">이미지 파일명</div>
+                    <img id="img-0" class="food-img" src="" alt="Food Image">
                     <div id="name-0" class="japanese-name">일본어 이름</div>
                 </div>
                 <!-- 오른쪽 선택지 -->
                 <div class="card" onclick="selectCandidate(1)">
-                    <div id="img-1" class="img-placeholder">이미지 파일명</div>
+                    <img id="img-1" class="food-img" src="" alt="Food Image">
                     <div id="name-1" class="japanese-name">일본어 이름</div>
                 </div>
             </div>
@@ -253,7 +244,7 @@
         <div id="result-screen" class="result-box">
             <h1 style="margin-bottom: 24px; font-size: 2.5rem; color: #e05275;">🏆 CHAMPION 🏆</h1>
             <div style="margin: 30px 0;">
-                <div id="winner-img" class="img-placeholder" style="height: 380px; max-width: 520px; margin: 0 auto 24px auto;"></div>
+                <img id="winner-img" class="food-img" style="height: 380px; max-width: 520px; margin: 0 auto 24px auto; display: block;" src="" alt="Winner Image">
                 <div id="winner-name" class="japanese-name" style="font-size: 2.6rem; margin-bottom: 15px;"></div>
                 <!-- 일본어 한 줄 결과 멘트 출력 박스 -->
                 <div id="winner-desc" class="desc-box"></div>
@@ -263,7 +254,7 @@
     </div>
 
     <script>
-        // 16가지 음식 데이터 (이미지 파일명 및 대소문자/확장자 수정 완료)
+        // 16가지 음식 데이터
         const foods = [
             { 
                 img: "samgyeopsal.AVIF", 
@@ -412,10 +403,11 @@
             const c1 = currentCandidates[currentMatchIndex];
             const c2 = currentCandidates[currentMatchIndex + 1];
 
-            document.getElementById('img-0').innerText = c1.img;
+            // 🖼️ img 태그의 src 경로 설정
+            document.getElementById('img-0').src = c1.img;
             document.getElementById('name-0').innerText = c1.jp;
 
-            document.getElementById('img-1').innerText = c2.img;
+            document.getElementById('img-1').src = c2.img;
             document.getElementById('name-1').innerText = c2.jp;
         }
 
@@ -444,7 +436,7 @@
             document.getElementById('game-screen').style.display = 'none';
             document.getElementById('result-screen').style.display = 'block';
 
-            document.getElementById('winner-img').innerText = winner.img;
+            document.getElementById('winner-img').src = winner.img;
             document.getElementById('winner-name').innerText = winner.jp;
             document.getElementById('winner-desc').innerText = winner.desc;
         }
