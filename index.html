@@ -19,7 +19,7 @@
 
         /* 🌸 배경: 오프화이트 칼라 & 벚꽃 애니메이션 영역 */
         body {
-            background-color: #fcfbf9; /* 오프화이트 (Off-White) */
+            background-color: #fcfbf9;
             color: #2c2224;
             display: flex;
             flex-direction: column;
@@ -179,19 +179,20 @@
             border: 2px solid #ffd4de;
         }
 
-        /* 🌸 결과 멘트 박스 스타일 */
+        /* 🌸 결과 멘트 박스 스타일 (글씨 크기 확대 및 한 줄 가독성 향상) */
         .desc-box {
             background-color: #fff4f6;
             border-radius: 16px;
-            padding: 24px 30px;
-            max-width: 600px;
-            margin: 20px auto 30px auto;
+            padding: 20px 30px;
+            max-width: 850px;
+            margin: 25px auto 35px auto;
             border: 1px solid #ffdae2;
-            font-size: 1.2rem;
-            font-weight: 500;
+            font-size: 1.45rem; /* 글씨 크기 확대 */
+            font-weight: 700;   /* 볼드 적용 */
             color: #4a2830;
-            line-height: 1.7;
+            line-height: 1.4;
             box-shadow: 0 4px 15px rgba(224, 109, 136, 0.05);
+            word-break: keep-all; /* 한 줄 표현 및 가독성 개선 */
         }
         
         @media (max-width: 768px) {
@@ -214,8 +215,8 @@
                 font-size: 1.25rem;
             }
             .desc-box {
-                font-size: 1rem5;
-                padding: 18px 20px;
+                font-size: 1.15rem;
+                padding: 16px 20px;
             }
         }
     </style>
@@ -254,7 +255,7 @@
             <div style="margin: 30px 0;">
                 <div id="winner-img" class="img-placeholder" style="height: 380px; max-width: 520px; margin: 0 auto 24px auto;"></div>
                 <div id="winner-name" class="japanese-name" style="font-size: 2.6rem; margin-bottom: 15px;"></div>
-                <!-- 일본어 결과 멘트 출력 박스 -->
+                <!-- 일본어 한 줄 결과 멘트 출력 박스 -->
                 <div id="winner-desc" class="desc-box"></div>
             </div>
             <button class="btn-start" onclick="location.reload()" style="margin-top: 10px;">RESTART</button>
@@ -262,87 +263,87 @@
     </div>
 
     <script>
-        // 16가지 음식 데이터 및 일본어 결과 멘트
+        // 16가지 음식 데이터 및 1줄 간결 명확해진 일본어 멘트
         const foods = [
             { 
                 img: "samgyeopsal.jpg", 
                 jp: "サムギョプサル",
-                desc: "気分が落ち込んだ時は迷わず肉に直行する、素直な直進派！" 
+                desc: "気分が落ち込んだら即お肉へ向かう直進派！" 
             },
             { 
                 img: "chicken.jpg", 
                 jp: "チキン",
-                desc: "夜10時になると本能が目を覚ます、夜食の名誉大使。" 
+                desc: "夜10時になると本能が目覚める夜食大使！" 
             },
             { 
                 img: "tteokbokki.jpg", 
                 jp: "トッポッキ",
-                desc: "ストレスが溜まると辛い味で脳をリセットする、刺激ラバー！" 
+                desc: "辛さで脳をリセットする刺激ラバー！" 
             },
             { 
                 img: "kimchi_jjigae.jpg", 
                 jp: "キムチチゲ",
-                desc: "華やかな流行より、いつもそばにいる安心感を愛する心地よい人。" 
+                desc: "流行より変わらない安心感を愛する人！" 
             },
             { 
                 img: "bibimbap.jpg", 
                 jp: "ビビンバ",
-                desc: "全く違うタイプの人々もまとめて仲良くさせる、人間接着剤！" 
+                desc: "みんなを仲良くまとめる人間接着剤！" 
             },
             { 
                 img: "bulgogi.jpg", 
                 jp: "プルコギ",
-                desc: "好き嫌いなんて関係ない！老若男女誰からも愛される万能人気者。" 
+                desc: "誰からも愛される万能な人気者！" 
             },
             { 
                 img: "cheese_dakgalbi.jpg", 
                 jp: "チーズタッカルビ",
-                desc: "定番のクラシックにトレンドをひとさじ加えられる、流行の先駆者。" 
+                desc: "定番にトレンドをプラスするおしゃれ派！" 
             },
             { 
                 img: "gimbap.jpg", 
                 jp: "キンパ",
-                desc: "どんな場所でも100%の実力を発揮する、コスパ最強の完璧主義者。" 
+                desc: "どこでも100%力を発揮するコス파最強派！" 
             },
             { 
                 img: "ramyeon.jpg", 
                 jp: "ラーメン",
-                desc: "複雑な悩みはNO！3分で幸せになれる方法を知っている明快な人。" 
+                desc: "3分で幸せになれる明快な思考の持ち主！" 
             },
             { 
                 img: "naengmyeon.jpg", 
                 jp: "冷麺",
-                desc: "周りに何を言われても気にしない！クールで自分らしい道を行くマイペース。" 
+                desc: "自分の道をクールに進むマイペース！" 
             },
             { 
                 img: "jajangmyeon.jpg", 
                 jp: "ジャージャー麺",
-                desc: "引越しの日や嬉しい日に、一番最初に思い浮かぶ思い出コレクター。" 
+                desc: "特別な日に一番に浮かぶ思い出コレクター！" 
             },
             { 
                 img: "sundubu_jjigae.jpg", 
                 jp: "スンドゥブチゲ",
-                desc: "見た目は柔らかいけれど、心の中はマグマのように熱い情熱派！" 
+                desc: "見た目は優しく心は熱い情熱派！" 
             },
             { 
                 img: "dakgalbi.jpg", 
                 jp: "タッカルビ",
-                desc: "集まりにあなたがいないと盛り上がらない、絶対的なムードメーカー。" 
+                desc: "場を盛り上げる絶対的なムードメーカー！" 
             },
             { 
                 img: "japchae.jpg", 
                 jp: "チャプチェ",
-                desc: "複数のことを同時に完璧にこなす、マルチタスクの達人。" 
+                desc: "何でも同時にこなすマルチタスクの達人！" 
             },
             { 
                 img: "budae_jjigae.jpg", 
                 jp: "プデチゲ",
-                desc: "色々な要素が混ざり合っても最高の we 導き出す、融合型の天才！" 
+                desc: "ミックスして最高を生み出す融合の天才！" 
             },
             { 
                 img: "kimchi.jpg", 
                 jp: "キムチ",
-                desc: "韓国人のソウルを宿し、どこでも 강烈な存在感を放つ主人公。" 
+                desc: "強い存在感を放つ永遠の主人公！" 
             }
         ];
 
@@ -350,7 +351,7 @@
         let nextRoundCandidates = [];
         let currentMatchIndex = 0;
 
-        // 🌸 벚꽃잎 동적 생성 함수
+        // 🌸 벚꽃잎 동적 생성
         function createSakuraPetals() {
             const container = document.getElementById('sakura-container');
             const petalCount = 25;
