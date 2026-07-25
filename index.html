@@ -143,11 +143,11 @@
             border-color: #ff85a2;
         }
 
-        /* 🖼️ 진짜 이미지 스타일 설정 */
+        /* 🖼️ 이미지 스타일 */
         .food-img {
             width: 100%;
             height: 360px;
-            object-fit: cover; /* 이미지가 상자 크기에 맞춰 예쁘게 잘림 */
+            object-fit: cover;
             border-radius: 18px;
             margin-bottom: 24px;
             border: 2px solid #ffdae2;
@@ -254,87 +254,87 @@
     </div>
 
     <script>
-        // 16가지 음식 데이터
+        // 16가지 음식 데이터 (수정된 번역 적용)
         const foods = [
             { 
                 img: "samgyeopsal.AVIF", 
                 jp: "サムギョプサル",
-                desc: "気分が落ち込んだら即お肉へ向かう直進派！" 
+                desc: "気分が落ち込んだら、迷わずお肉へ向かう素直な直進派！" 
             },
             { 
                 img: "chicken.JPG", 
                 jp: "チキン",
-                desc: "夜10時になると本能が目覚める夜食大使！" 
+                desc: "夜10時になると本能が目を覚ます夜食の名誉大使！" 
             },
             { 
                 img: "tteokbokki.JPG", 
                 jp: "トッポッキ",
-                desc: "辛さで脳をリセットする刺激ラバー！" 
+                desc: "ストレスを感じたら辛さで脳をリセットする刺激ラバー！" 
             },
             { 
                 img: "kimchi_jjigae.JPG", 
                 jp: "キムチチゲ",
-                desc: "流行より変わらない安心感を愛する人！" 
+                desc: "トレンドより「いつもの味」！常にそばに置きたい安心の存在。" 
             },
             { 
                 img: "bibimbap.JPG", 
                 jp: "ビビンバ",
-                desc: "みんなを仲良くまとめる人間接着剤！" 
+                desc: "十人十色の人々をひとつにまとめる人間接着剤！" 
             },
             { 
                 img: "bulgogi.WEBP", 
                 jp: "プルコギ",
-                desc: "誰からも愛される万能な人気者！" 
+                desc: "好き嫌いゼロ！老若男女だれからも愛される万能人気者。" 
             },
             { 
                 img: "cheese_dakgalbi.JPG", 
                 jp: "チーズタッカルビ",
-                desc: "定番にトレンドをプラスするおしゃれ派！" 
+                desc: "定番にトレンドをひとさじ！センスあふれるトレンドセッター。" 
             },
             { 
                 img: "gimbap.JPG", 
                 jp: "キンパ",
-                desc: "どこでも100%力を発揮するコスパ最強派！" 
+                desc: "どこでも200%の実力を発揮する万能パーフェクト主義者！" 
             },
             { 
                 img: "ramyeon.JPG", 
                 jp: "ラーメン",
-                desc: "3分で幸せになれる明快な思考の持ち主！" 
+                desc: "複雑な悩みはNO！3分で幸せになれる明快な人。" 
             },
             { 
                 img: "naengmyeon.JPG", 
                 jp: "冷麺",
-                desc: "自分の道をクールに進むマイペース！" 
+                desc: "周りに流されず、自分だけの涼しげな道を突き進むマイペース！" 
             },
             { 
                 img: "jajangmyeon.JPG", 
                 jp: "ジャージャー麺",
-                desc: "特別な日に一番に浮かぶ思い出コレクター！" 
+                desc: "特別な日や嬉しい日に一番に思い浮かぶ思い出コレクター。" 
             },
             { 
                 img: "sundubu_jjigae.JPG", 
                 jp: "スンドゥブチゲ",
-                desc: "見た目は優しく心は熱い情熱派！" 
+                desc: "見た目は優しく、中はマグマのように熱い情熱派！" 
             },
             { 
                 img: "samgyetang.JPG", 
                 jp: "サムゲタン",
-                desc: "疲れた人に深いエネルギーをチャージする頼もしいヒーラー！" 
+                desc: "疲れた心と体に深いエネルギーをチャージしてくれる頼もしいヒーラー！" 
             },
             { 
                 img: "japchae.JPG", 
                 jp: "チャプチェ",
-                desc: "何でも同時にこなすマルチタスクの達人！" 
+                desc: "小さなディテールも逃さない、真心が詰まった気配りの達人！" 
             },
             { 
                 img: "budae_jjigae.JPG", 
                 jp: "プデチゲ",
-                desc: "ミックスして最高を生み出す融合の天才！" 
+                desc: "いろいろ混ざり合っても最高の答えを導き出す融合の天才！" 
             },
             { 
                 img: "kimchi.JPG", 
                 jp: "キムチ",
-                desc: "どんな場所でも欠かせない名作シーンスティーラー！" 
+                desc: "どんな場所でもいないと寂しい、欠かせない名作シーンスティーラー！" 
             }
         ];
 
@@ -403,7 +403,6 @@
             const c1 = currentCandidates[currentMatchIndex];
             const c2 = currentCandidates[currentMatchIndex + 1];
 
-            // 🖼️ img 태그의 src 경로 설정
             document.getElementById('img-0').src = c1.img;
             document.getElementById('name-0').innerText = c1.jp;
 
